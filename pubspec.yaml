@@ -42,6 +42,10 @@ dependencies:
   intl: ^0.17.0
   share: ^2.0.4
   encrypt: ^5.0.3
+  firebase_core: ^2.30.1
+  firebase_auth:
+  uuid: ^4.4.0
+  cloud_firestore:
 dev_dependencies:
   flutter_test:
     sdk: flutter
