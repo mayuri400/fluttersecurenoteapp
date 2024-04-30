@@ -39,9 +39,8 @@ class Database {
 
   Future<void> uploadData()async{
     List<Note> notes=await DatabaseHelper.instance.getNoteList();
-    await Isolate.run(() => _deleteCollection());
-    await Isolate.run(() => addNote(notes));
-
+    await _deleteCollection();
+    await addNote(notes);
   }
   Future<void> addNote(List<Note> notes) async {
     try {
@@ -60,9 +59,8 @@ class Database {
   }
 
 
-  void _deleteCollection() async {
-    final firestore = FirebaseFirestore.instance;
-    final collectionRef = firestore.collection('notes');
+  Future<void> _deleteCollection() async {
+    final collectionRef = _firestore.collection('notes');
 
     // Get all documents in the collection
     final querySnapshot = await collectionRef.get();

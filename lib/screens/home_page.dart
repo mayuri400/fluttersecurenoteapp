@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:notes_app/database_helper/database_firebase.dart';
 import 'package:notes_app/routing/app_routes.dart';
 import 'package:notes_app/screens/search_screen.dart';
 
@@ -23,6 +25,14 @@ class HomePage extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
+        actions: [
+          GestureDetector(onTap:()async{
+           await Database().uploadData();
+          },child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Icon(Icons.cloud_upload),
+          ))
+        ],
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(
           color: Colors.black,
@@ -105,27 +115,27 @@ class HomePage extends StatelessWidget {
         ),
         child: ListView.builder(
           shrinkWrap: false,
-          itemCount: controller.filesData.length,
+          itemCount: controller.notes.length,
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () async{
                // Get.toNamed(AppRoute.NOTE_DETAILS, arguments: index);
-                String s=await controller.decryptFileContent(controller.filesData[index].path);
-                print(s);
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialogWidget(
-                      headingText: "File content",
-                      contentText:s,
-                      confirmFunction: () {
-                        Get.back();
-                      },
-                      declineFunction: () {
-                      },
-                    );
-                  },
-                );
+               //  String s=await controller.decryptFileContent(controller.filesData[index].path);
+               //  print(s);
+               //  showDialog(
+               //    context: context,
+               //    builder: (context) {
+               //      return AlertDialogWidget(
+               //        headingText: "File content",
+               //        contentText:s,
+               //        confirmFunction: () {
+               //          Get.back();
+               //        },
+               //        declineFunction: () {
+               //        },
+               //      );
+               //    },
+               //  );
               },
               onLongPress: () async {
 
@@ -145,8 +155,8 @@ class HomePage extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              controller.filesData[index].path.substring(controller.filesData[index].path.lastIndexOf('/') + 1),
+                            Text(controller.notes[index].title.toString()
+                            /*  controller.filesData[index].path.substring(controller.filesData[index].path.lastIndexOf('/') + 1)*/,
                               style: const TextStyle(
                                   fontSize: 21,
                                   fontWeight: FontWeight.bold,

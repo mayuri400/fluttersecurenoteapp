@@ -44,8 +44,8 @@ class NoteController extends GetxController {
       dateTimeEdited: DateFormat("dd-MM-yyyy hh:mm a").format(DateTime.now()),
       dateTimeCreated: DateFormat("dd-MM-yyyy hh:mm a").format(DateTime.now()),
         isFavorite: false);
-  //  await DatabaseHelper.instance.addNote(note);
-    await encryptFile(title,content);
+    await DatabaseHelper.instance.addNote(note);
+   // await encryptFile(title,content);
     titleController.text = "";
     contentController.text = "";
     getAllNotes();
